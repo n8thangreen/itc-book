@@ -1,0 +1,35 @@
+on:
+  push:
+    branches: main
+
+name: Publish Quarto Book
+
+jobs:
+  build-deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write # Needed to write to the gh-pages branch
+      pages: write    # Needed to deploy to GitHub Pages
+      id-token: write # Needed for OpenID Connect (if using a custom domain with specific settings)
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Quarto
+        uses: quarto-dev/quarto-actions/setup@v2
+
+      - name: Render and Publish
+        uses: quarto-dev/quarto-actions/render@v2
+        with:
+          to: html # Or all, or pdf, etc.
+          path: "." # Path to your book project
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v4
+        with:
+          path: _site # Default output dir for Quarto websites/books
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
