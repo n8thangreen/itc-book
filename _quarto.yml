@@ -1,9 +1,10 @@
 project:
   type: book
+  output-dir: docs
 
 book:
-  title: "itc-book"
-  author: "Norah Jones"
+  title: "ITC book"
+  author: "Nathan Green"
   date: "27/06/2025"
   chapters:
     - index.qmd
